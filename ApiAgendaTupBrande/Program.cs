@@ -31,8 +31,10 @@ builder.Services.AddSwaggerGen(setupAction =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "AgendaApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definición
-                }, new List<string>() }
+                    Id = "AgendaApiBearerAuth" 
+                } //Tiene que coincidir con el id seteado arriba en la definición
+            }, new List<string>() 
+        }
     });
 });
 
@@ -42,14 +44,6 @@ builder.Services.AddDbContext<AplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"));
 });
 
-// Add AutoMapper
-builder.Services.AddAutoMapper(typeof(Program));
-
-// Add Services
-builder.Services.AddScoped<IContactRepository, ContactRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-// Add Authentication 
 builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntenticación que tenemos que elegir después en PostMan para pasarle el token
     .AddJwtBearer(options => //Acá definimos la configuración de la autenticación. le decimos qué cosas queremos comprobar. La fecha de expiración se valida por defecto.
     {
@@ -65,6 +59,15 @@ builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntentica
     }
 );
 
+// Add AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
+// Add Services
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +78,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();//********************
 
 app.UseAuthorization();
 

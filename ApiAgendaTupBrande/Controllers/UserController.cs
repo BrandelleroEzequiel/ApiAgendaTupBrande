@@ -12,7 +12,6 @@ namespace ApiAgendaTupBrande.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -25,6 +24,7 @@ namespace ApiAgendaTupBrande.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try
@@ -43,6 +43,7 @@ namespace ApiAgendaTupBrande.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -65,6 +66,7 @@ namespace ApiAgendaTupBrande.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -108,6 +110,7 @@ namespace ApiAgendaTupBrande.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Put(int id, [FromBody] UserDTO userDto)
         {
             try

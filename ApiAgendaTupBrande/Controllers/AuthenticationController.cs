@@ -9,18 +9,17 @@ using System.Text;
 
 namespace ApiAgendaTupBrande.Controllers
 {
-    [Route("api/authentication")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _config;
 
-        public AuthenticationController(IConfiguration config, IUserRepository userRepository)
+        public AuthenticationController(IUserRepository userRepository, IConfiguration config)
         {
-            _config = config; //Hacemos la inyección para poder usar el appsettings.json
-            this._userRepository = userRepository;
-
+            _userRepository = userRepository;
+           _config = config; //Hacemos la inyección para poder usar el appsettings.json
         }
 
         [HttpPost("authenticate")] //Vamos a usar un POST ya que debemos enviar los datos para hacer el login
